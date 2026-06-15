@@ -2,12 +2,14 @@ package main
 
 import (
 	"LukasDerBaum/templates"
+	"LukasDerBaum/src"
 	"bytes"
 	"context"
 	"fmt"
 	"os"
 	"strings"
 
+	"github.com/a-h/templ"
 	"github.com/yuin/goldmark"
 )
 
@@ -33,32 +35,55 @@ func write(path, content string) {
 	os.WriteFile(path, []byte(content), 0644)
 }
 
-func main() {
-	md, err := os.ReadFile("content/index.md")
-	if err != nil {
-		panic(err)
-	}
+func RenderHome(title string) templ.Component {
+    return templates.BaseLayout(title, src.HomePage())
+}
 
-	htmlBody := md_to_HTML(string(md))
-	os.Remove("build/")
-	os.Mkdir("build", 0755)
-	f, err := os.Create("build/index.html")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
+func RenderLinks(title string) templ.Component {
+    return templates.BaseLayout(title, src.Links())
+}
 
-	// fmt.Println("Rendering page...", "My Site", htmlBody)
-	// page_body := templ.Raw(htmlBody)
-	//fmt.Println(page_body)
-	page := templates.Page("My Site", htmlBody)
-	fmt.Println(page)
-	err = page.Render(context.Background(), f)
-	if err != nil {
-		panic(err)
-	}
 
+func build_pages(pages map[string]templ.Component) {
+	for name, page := range pages {
+		os.Mkdir("build/"+name, 0755)
+		f, err := os.Create("build/" + name + "index.html")
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+		err = page.Render(context.Background(), f)
+		if err != nil {
+			panic(err)
+		}
+	}
 	os.CopyFS("build/style/", os.DirFS("style/"))
+	os.CopyFS("build/public/", os.DirFS("public/"))
+}
+
+func main() {
+	// md, err := os.ReadFile("content/index.md")
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// htmlBody := md_to_HTML(string(md))
+
+	var project_page = map[string]templ.Component{}
+	var pages = map[string]templ.Component{
+		"":  RenderHome("My Site"),
+		"links/":  RenderLinks("Links"),
+		"projects/": buildProjects(&project_page),
+	}
+
+
+
+
+	os.RemoveAll("build")
+	fmt.Println("Removing build directory...")
+	os.Mkdir("build", 0755)
+	build_pages(pages)
+	build_pages(project_page)
 
 	fmt.Println("Site generated in /build")
 }

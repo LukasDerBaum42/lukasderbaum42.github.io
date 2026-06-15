@@ -1,4 +1,4 @@
-main: main.go style/ templates/
+main: main.go style/ templates/ public/
 	templ generate
-	go run main.go
-	cd public && python -m http.server
+	go run main.go build_projects.go
+	cd build && python -m http.server

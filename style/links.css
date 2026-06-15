@@ -1,0 +1,97 @@
+.link-group {
+    display: grid;
+    grid-template: "a a a";
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.link-group h3 {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1rem;
+}
+
+.link-group img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+    display: block;
+    filter: invert(1);
+}
+
+.link-group div {
+    /*background: #1e1f1e;*/
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 80%;
+    display: grid;
+    gap: 0.7rem;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    grid-template-columns: repeat(auto-fit);
+    align-items: center;
+}
+
+.link-group div:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.link-group a {
+    color: #eee;
+    padding: 0.3rem;
+    max-height: 1.6rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.link-group a:hover {
+    color: #ddd;
+    padding: 0.3rem;
+    max-height: 1.6rem;
+    transform: translateY(-0.1rem);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.Youtube-links a {
+    background: #ff0000;
+}
+
+.Youtube-links a:hover {
+    background: #d01010;
+}
+
+.Twitter-links a {
+    background: #1DA1F2;
+}
+
+.Twitter-links a:hover {
+    background:  #2DB1D2;
+}
+
+.Swarm-links a {
+    background: #109010;
+}
+
+.Swarm-links a:hover {
+    background: #207020;
+}
+
+.itchio-links a {
+    background: #FA5C5C;
+}
+
+.itchio-links a:hover {
+    background: #DA6C6C;
+}

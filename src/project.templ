@@ -1,0 +1,26 @@
+package src
+
+// import "github.com/a-h/templ"
+templ Project(tiles []templ.Component) {
+	<h2>Projects</h2>
+	<dev class="projects-grid">
+		for _,i := range tiles {
+			@i
+		}
+	</dev>
+}
+
+
+templ ProjectTile(title string, description string, url string) {
+	<a class="project-tile" href={url}>
+		<h2>{title}</h2>
+		<p>{description}</p>
+	</a>
+}
+
+
+templ ProjectPage(body string) {
+	<main>
+		@templ.Raw(body)
+	</main>
+}

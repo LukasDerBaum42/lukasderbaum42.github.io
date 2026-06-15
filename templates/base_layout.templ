@@ -1,0 +1,19 @@
+package templates
+
+templ BaseLayout(title string, children templ.Component) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<title>Lukas Der Baum’s webside</title>
+			<link rel="stylesheet" href="/style/style.css"/>
+		</head>
+		<body>
+			@Navbar()
+			<main>
+				@children
+			</main>
+			@Footer()
+		</body>
+	</html>
+}
