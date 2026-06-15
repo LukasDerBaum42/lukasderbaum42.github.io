@@ -57,8 +57,6 @@ func buildProjects(pages *map[string]templ.Component) templ.Component {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(fm.Title)
-		fmt.Println(fm.Description)
 		parsedContent := md_to_HTML(string(content))
 		file_name := strings.TrimSuffix(file.Name(), ".md")
 		path := "projects/" + file_name + "/"

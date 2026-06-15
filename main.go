@@ -72,8 +72,7 @@ func build_pages(pages map[string]templ.Component) {
 			panic(err)
 		}
 	}
-	os.CopyFS("build/style/", os.DirFS("style/"))
-	os.CopyFS("build/public/", os.DirFS("public/"))
+	
 }
 
 func main() {
@@ -101,6 +100,8 @@ func main() {
 	os.Mkdir("build", 0755)
 	build_pages(pages)
 	build_pages(project_page)
+	os.CopyFS("build/style/", os.DirFS("style/"))
+	os.CopyFS("build/public/", os.DirFS("public/"))
 
 	fmt.Println("Site generated in /build")
 }
