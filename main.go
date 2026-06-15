@@ -11,12 +11,19 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/renderer/html"
 )
 
 func md_to_HTML(md string) string {
 	var buf bytes.Buffer
 
-    err := goldmark.Convert([]byte(md), &buf)
+	md_parser := goldmark.New(
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(),
+		),
+	)
+	
+    err := md_parser.Convert([]byte(md), &buf)
     if err != nil {
         panic(err)
     }
@@ -41,6 +48,14 @@ func RenderHome(title string) templ.Component {
 
 func RenderLinks(title string) templ.Component {
     return templates.BaseLayout(title, src.Links())
+}
+
+func RenderAbout(title string) templ.Component {
+    return templates.BaseLayout(title, src.About())
+}
+
+func RenderGoals(title string) templ.Component {
+    return templates.BaseLayout(title, src.Goals())
 }
 
 
@@ -73,6 +88,8 @@ func main() {
 	var pages = map[string]templ.Component{
 		"":  RenderHome("My Site"),
 		"links/":  RenderLinks("Links"),
+		"about/":  RenderAbout("About"),
+		"goals/":  RenderGoals("Goals"),
 		"projects/": buildProjects(&project_page),
 	}
 

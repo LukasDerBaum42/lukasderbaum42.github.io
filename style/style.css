@@ -84,9 +84,11 @@ footer {
 }
 
 .projects-grid {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     /*grid-template: repeat(auto-fit, minmax(250, 1fr));*/
-    grid-template: "a a";
+    /*grid-template: "a a";*/
     gap: 1.5rem;
     margin-top: 2rem;
 }
@@ -94,6 +96,7 @@ footer {
 .project-tile {
     background: #1e1f1e;
     max-width: 60%;
+    min-width: 30%;
     padding: 1.5rem;
     border-radius: 2rem;
     text-decoration: none;
