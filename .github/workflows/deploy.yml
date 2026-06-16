@@ -35,7 +35,7 @@ jobs:
         run: templ generate
 
       - name: Build site
-        run: go run .
+        run: go run main.go build_projects.go builer.go
 
       - name: Upload build folder
         uses: actions/upload-pages-artifact@v3
