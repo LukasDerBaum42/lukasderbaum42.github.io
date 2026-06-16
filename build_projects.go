@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 	"github.com/BurntSushi/toml"
-	// "fmt"
+	"fmt"
 )
 
 
@@ -33,15 +33,21 @@ func splitFrontMatter(md string) (FrontMatter, string) {
 }
 
 
-func buildProjectPage(title string, body string) templ.Component {
-	return templates.BaseLayout(title, src.ProjectPage(body))
+func buildProjectPage(title, prefix , path , body string) templ.Component {
+	return templates.BaseLayout(title,path, prefix,  src.ProjectPage(body))
 }
 
 
 
-func buildProjects(pages *map[string]templ.Component) templ.Component {
-	files, err := os.ReadDir("content/projects")
+func buildProjects(prefix string,base_path string,pages *map[string]templ.Component) templ.Component {
+	 subdir := prefix
+	flipped_prefix := strings.TrimPrefix(prefix, "/") + "/"
+	if subdir != "" {
+		subdir = "/i18n-" + strings.TrimPrefix(subdir, "/")
+	}
+	files, err := os.ReadDir("content" + subdir + "/projects/" )
 	if err != nil {
+		fmt.Println("content" + subdir + "/projects/")
 		panic(err)
 	}
 	
@@ -51,7 +57,7 @@ func buildProjects(pages *map[string]templ.Component) templ.Component {
 		if file.IsDir() || !strings.HasSuffix(file.Name(), ".md") {
 			continue
 		}
-		md_bytes, err := os.ReadFile("content/projects/" + file.Name())
+		md_bytes, err := os.ReadFile("content" + subdir + "/projects/" + file.Name())
 		
 		fm, content := splitFrontMatter(string(md_bytes))
 		if err != nil {
@@ -59,11 +65,11 @@ func buildProjects(pages *map[string]templ.Component) templ.Component {
 		}
 		parsedContent := md_to_HTML(string(content))
 		file_name := strings.TrimSuffix(file.Name(), ".md")
-		path := "projects/" + file_name + "/"
-		(*pages)[path] = buildProjectPage(fm.Title, parsedContent)
+		path := flipped_prefix + base_path + file_name + "/"
+		(*pages)[path] = buildProjectPage(fm.Title, prefix,path, parsedContent)
 		tile := src.ProjectTile(fm.Title,fm.Description,file_name)
 		project_list = append(project_list, tile)
 	}
 
-	return templates.BaseLayout("Projects", src.Project(project_list))
+	return templates.BaseLayout("Projects",base_path,prefix, src.Project(project_list))
 }

@@ -1,6 +1,6 @@
 +++
 title = "Jahresarbeit"
-description = "The paper I worte for the end of school. In the paper I talk about AI. The paper is in german"
+description = "Meine Jahresarbeit die ich zum Schule abschluss geschrieben habe. Es geht um das thema KI."
 +++
 
 # Jahresarbeit

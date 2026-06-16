@@ -1,17 +1,18 @@
 package templates
 
-templ Navbar() {
+templ Navbar(prefix,page string) {
 	<nav>
-		<img src="/public/logos/Phönix_logo_mono.svg"/>
-		<h1>Lukas DerBaum </h1>
+		<a href={prefix + "/"} class="navbar-brand">
+			<img src="/public/logos/Phönix_logo_mono.svg"/>
+			<h1>Lukas DerBaum </h1>
+		</a>
 		<div>
-			<a href="/">Home</a>
-			<a href="/projects">Projects</a>
-			<a href="/about">About me</a>
-			<a href="/goals">Goals</a>
-			<a href="/links">Likes</a>
+			<a href={prefix + "/projects"}>Projects</a>
+			<a href={prefix + "/about"}>About me</a>
+			<a href={prefix + "/goals"}>Goals</a>
+			<a href={prefix + "/links"}>Likes</a>
 		</div>
-
+		@Language(page, prefix)
 		
 	</nav>
 }

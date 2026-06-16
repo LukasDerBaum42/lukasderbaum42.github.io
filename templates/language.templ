@@ -1,0 +1,41 @@
+package templates
+
+import "strings"
+
+
+var langs []string = []string{"English", "Deutsch"}
+var lang_map map[string]string = map[string]string{
+	"English": "",
+	"Deutsch": "/de",
+}
+
+var words map[string]string = map[string]string{
+	"": "Language",
+	"/de": "Sprache",
+}
+
+func fix_name(page, prefix string) string {
+	if prefix != "" {
+		trimed := strings.TrimPrefix("/"+page, prefix+"/")
+		if strings.HasPrefix(trimed,"/") {
+			return trimed
+		} else {
+			return "/" + trimed
+		}
+	} else {
+		if strings.HasPrefix(page,"/") {
+			return page
+		} else {
+			return "/" + page
+		}
+	}
+}
+
+templ Language(page, prefix string) {
+	<details>
+		<summary>{words[prefix]}</summary>
+		for _,name := range langs {
+			<a href={lang_map[name] + fix_name(page, prefix)}>{name}</a>
+		}
+	</details>	
+}

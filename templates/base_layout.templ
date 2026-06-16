@@ -1,6 +1,6 @@
 package templates
 
-templ BaseLayout(title string, children templ.Component) {
+templ BaseLayout(title string, path string, prefix string, children templ.Component) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -9,7 +9,7 @@ templ BaseLayout(title string, children templ.Component) {
 			<link rel="stylesheet" href="/style/style.css"/>
 		</head>
 		<body>
-			@Navbar()
+			@Navbar(prefix,path)
 			<main>
 				@children
 			</main>

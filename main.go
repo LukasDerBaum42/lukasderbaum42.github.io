@@ -1,8 +1,9 @@
 package main
 
 import (
-	"LukasDerBaum/templates"
 	"LukasDerBaum/src"
+	"LukasDerBaum/templates"
+	"LukasDerBaum/src/i18n-de"
 	"bytes"
 	"context"
 	"fmt"
@@ -42,20 +43,29 @@ func write(path, content string) {
 	os.WriteFile(path, []byte(content), 0644)
 }
 
-func RenderHome(title string) templ.Component {
-    return templates.BaseLayout(title, src.HomePage())
+func RenderHome(title, path, prefix string) templ.Component {
+    return templates.BaseLayout(title,path,prefix, src.HomePage())
 }
 
-func RenderLinks(title string) templ.Component {
-    return templates.BaseLayout(title, src.Links())
+func RenderLinks(title, path, prefix string) templ.Component {
+    return templates.BaseLayout(title,path,prefix, src.Links())
 }
 
-func RenderAbout(title string) templ.Component {
-    return templates.BaseLayout(title, src.About())
+func RenderAbout(title, path, prefix string) templ.Component {
+    return templates.BaseLayout(title, path,prefix, src.About())
 }
 
-func RenderGoals(title string) templ.Component {
-    return templates.BaseLayout(title, src.Goals())
+func RenderGoals(title, path, prefix string) templ.Component {
+    return templates.BaseLayout(title, path,prefix, src.Goals())
+}
+
+func build_german(pages, project_page *map[string]templ.Component){
+	os.Mkdir("build/de/", 0755)
+	(*pages)["de/"] = templates.BaseLayout("Meine Seite", "de/", "/de", src_i18n_de.HomePage())
+	(*pages)["de/projects/"] = buildProjects("/de","projects/", project_page)
+	(*pages)["de/about/"] = templates.BaseLayout("About me", "de/about/", "/de", src.About())
+	(*pages)["de/goals/"] = templates.BaseLayout("Goals", "de/goals/", "/de", src.Goals())
+	(*pages)["de/links/"] = templates.BaseLayout("Links", "de/links/", "/de", src.Links())
 }
 
 
@@ -82,22 +92,22 @@ func main() {
 	// }
 
 	// htmlBody := md_to_HTML(string(md))
-
-	var project_page = map[string]templ.Component{}
-	var pages = map[string]templ.Component{
-		"":  RenderHome("My Site"),
-		"links/":  RenderLinks("Links"),
-		"about/":  RenderAbout("About"),
-		"goals/":  RenderGoals("Goals"),
-		"projects/": buildProjects(&project_page),
-	}
-
-
-
-
 	os.RemoveAll("build")
 	fmt.Println("Removing build directory...")
 	os.Mkdir("build", 0755)
+	prefix := ""
+	var project_page = map[string]templ.Component{}
+	var pages = map[string]templ.Component{
+		"":  RenderHome("My Site","", prefix),
+		"links/":  RenderLinks("Links","links/", prefix),
+		"about/":  RenderAbout("About","about/",prefix),
+		"goals/":  RenderGoals("Goals","goals/",prefix),
+		"projects/": buildProjects(prefix, "projects/",&project_page),
+	}
+
+	build_german(&pages, &project_page)
+
+
 	build_pages(pages)
 	build_pages(project_page)
 	os.CopyFS("build/style/", os.DirFS("style/"))
