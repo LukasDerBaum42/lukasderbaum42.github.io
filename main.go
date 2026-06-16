@@ -69,10 +69,10 @@ func build_german(pages, project_page *map[string]templ.Component){
 }
 
 
-func build_pages(pages map[string]templ.Component) {
+func build_pages(pages map[string]templ.Component, dev bool) {
 	for name, page := range pages {
 		os.Mkdir("build/"+name, 0755)
-		f, err := os.Create("build/" + name + "index.html")
+		f, err := devCreate("build/" + name + "index.html", dev)
 		if err != nil {
 			panic(err)
 		}
@@ -86,14 +86,14 @@ func build_pages(pages map[string]templ.Component) {
 }
 
 func main() {
-	// md, err := os.ReadFile("content/index.md")
-	// if err != nil {
-	// 	panic(err)
-	// }
+	dev := len(os.Args) > 1 && os.Args[1] == "--dev"
 
-	// htmlBody := md_to_HTML(string(md))
-	os.RemoveAll("build")
-	fmt.Println("Removing build directory...")
+	if !dev {
+		os.RemoveAll("build")
+		fmt.Println("Removing build directory...")
+	} else {
+		fmt.Println("Dev mode: keeping existing build directory")
+	}
 	os.Mkdir("build", 0755)
 	prefix := ""
 	var project_page = map[string]templ.Component{}
@@ -108,10 +108,12 @@ func main() {
 	build_german(&pages, &project_page)
 
 
-	build_pages(pages)
-	build_pages(project_page)
-	os.CopyFS("build/style/", os.DirFS("style/"))
-	os.CopyFS("build/public/", os.DirFS("public/"))
+	build_pages(pages, dev)
+	build_pages(project_page, dev)
+	devCopyFS("build/style/", os.DirFS("style/"), dev)
+	devCopyFS("build/public/", os.DirFS("public/"), dev)
+	// compilTS(dev)
+	
 
 	fmt.Println("Site generated in /build")
 }

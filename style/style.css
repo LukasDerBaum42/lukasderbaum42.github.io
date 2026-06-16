@@ -66,11 +66,12 @@ nav details {
 }
 
 
+
 main {
     padding: 2rem;
     flex: 1;
 }
-
+h1,
 h2 {
     text-align: center;
 }

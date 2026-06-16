@@ -5,10 +5,14 @@ templ BaseLayout(title string, path string, prefix string, children templ.Compon
 	<html>
 		<head>
 			<meta charset="utf-8"/>
-			<title>Lukas Der Baum’s webside</title>
+			<title>Lukas Der Baum's webside</title>
 			<link rel="stylesheet" href="/style/style.css"/>
+			<link rel="stylesheet" href="/style/stars.css"/>
+			// <script type="module" src="/scripts/stars.js" defer></script>
 		</head>
 		<body>
+			//<div id="stars"></div>
+			@stars()
 			@Navbar(prefix,path)
 			<main>
 				@children

@@ -1,0 +1,52 @@
+package templates
+
+import "strconv"
+import "math/rand"
+import "time"
+import "fmt"
+
+type star_com struct{
+	duration 	float64
+	delay 		float64
+}
+
+templ star(inner, middle, outer star_com, x , y  int, size float64) {
+	<div class="star" style={"animation-duration:" + strconv.FormatFloat(outer.duration,'f',-1,64) + "s; animation-delay:" + strconv.FormatFloat(outer.delay,'f',-1,64) + "s;"}>
+		<div class="star-middle" style={"animation-duration:" + strconv.FormatFloat(middle.duration,'f',-1,64) + "s; animation-delay:" + strconv.FormatFloat(middle.delay,'f',-1,64) + "s;"}>
+			<div class="star-inner" style={"animation-duration:" + strconv.FormatFloat(inner.duration,'f',-1,64) + "s; animation-delay:" + strconv.FormatFloat(inner.delay,'f',-1,64) + "s; top:"+ strconv.Itoa(y) + "vh; left:"+strconv.Itoa(x)+"vw; width:"+strconv.FormatFloat(size,'f',-1,64)+"px; height:"+strconv.FormatFloat(size,'f',-1,64)+"px;"}>
+			</div>
+		</div>
+	</div>
+}
+
+func gen_star() templ.Component {
+	x1 := rand.NewSource(time.Now().UnixNano())
+    y1 := rand.New(x1)
+	inner := star_com{
+		duration: y1.Float64() * 10 + 5,
+		delay: y1.Float64() * 5,
+	}
+	middle := star_com{
+		duration: y1.Float64() * 90 + 90,
+		delay: y1.Float64() * 11,
+	}
+	outer := star_com{
+		duration: y1.Float64() * 80 + 80,
+		delay: y1.Float64() * 9,
+	}
+	x := int(y1.Float64() * 100)
+	y := int(y1.Float64() * 100)
+	size := y1.Float64() * 4 + 1
+	fmt.Println(inner,middle,outer,x,y,size)
+	return star(inner,middle,outer,x,y,size)
+}
+
+
+templ stars() {
+	// <p>star</p>
+	<div id="stars">	
+	for _ = range 200 {
+		@gen_star()
+	}
+	</div>
+}
