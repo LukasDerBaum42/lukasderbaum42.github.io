@@ -61,11 +61,12 @@ func RenderGoals(title, path, prefix string) templ.Component {
 
 func build_german(pages, project_page *map[string]templ.Component){
 	os.Mkdir("build/de/", 0755)
-	(*pages)["de/"] = templates.BaseLayout("Meine Seite", "de/", "/de", src_i18n_de.HomePage())
+	prefix := "/de"
+	(*pages)["de/"] = templates.BaseLayout("Meine Seite", "de/", prefix, src_i18n_de.HomePage())
 	(*pages)["de/projects/"] = buildProjects("/de","projects/", project_page)
-	(*pages)["de/about/"] = templates.BaseLayout("About me", "de/about/", "/de", src.About())
-	(*pages)["de/goals/"] = templates.BaseLayout("Goals", "de/goals/", "/de", src.Goals())
-	(*pages)["de/links/"] = templates.BaseLayout("Links", "de/links/", "/de", src.Links())
+	(*pages)["de/about/"] = templates.BaseLayout("About me", "de/about/", prefix, src.About())
+	(*pages)["de/goals/"] = templates.BaseLayout("Goals", "de/goals/", prefix, src.Goals())
+	(*pages)["de/links/"] = templates.BaseLayout("Links", "de/links/", prefix, src.Links())
 }
 
 

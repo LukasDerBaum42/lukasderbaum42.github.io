@@ -35,4 +35,4 @@ Zu meinen weiteren Plänen gehören eine Neuro-Integration sowie bessere Kampfme
 
 [Falls du interessiert bist: Das Spiel ist auf itch.io verfügbar. Klicke einfach hier oder schau im Link-Bereich nach.](https://lukasderbaum42.itch.io/dice-dungeon)
 
-[← Zurück](../)
+[← Zurück](./)

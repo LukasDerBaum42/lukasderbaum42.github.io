@@ -32,7 +32,7 @@ def log(colour, tag, msg):
 
 # ── File-hash watcher ─────────────────────────────────────────────────────────
 WATCH_EXTENSIONS = {".go", ".templ", ".md", ".css", ".html", ".toml", ".yaml",".ts"}
-IGNORE_DIRS      = {"build", ".git", "vendor", "__pycache__"}
+IGNORE_DIRS      = {"build", ".git", "vendor", "__pycache__", "_templ.go"}
 
 def file_hash(path: Path) -> str:
     try:
@@ -47,6 +47,8 @@ def scan(root: Path) -> dict[str, str]:
         for fname in files:
             p = Path(dirpath) / fname
             if p.suffix in WATCH_EXTENSIONS:
+                if str(p).endswith("_templ.go"):
+                    continue
                 hashes[str(p.relative_to(root))] = file_hash(p)
     return hashes
 
@@ -199,7 +201,7 @@ def main():
     parser = argparse.ArgumentParser(description="Hot-reload dev server")
     parser.add_argument("--port",      type=int,   default=8080,            help="HTTP port (default 8080)")
     parser.add_argument("--dir",       type=str,   default=".",             help="Project root (default: cwd)")
-    parser.add_argument("--build-cmd", type=str,   default="go run . --dev",help='Build command (default: "go run . --dev")')
+    parser.add_argument("--build-cmd", type=str,   default="make build_dev",help='Build command (default: "make build_dev")')
     parser.add_argument("--build-dir", type=str,   default="build",         help='Dir to serve (default: "build")')
     parser.add_argument("--interval",  type=float, default=0.5,             help="Poll interval in seconds (default 0.5)")
     args = parser.parse_args()

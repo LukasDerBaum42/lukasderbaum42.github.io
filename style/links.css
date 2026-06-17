@@ -25,7 +25,8 @@
 }
 
 .link-group div {
-    background: #1e1f1e;
+    background: #1e1f1e6f;
+    transition: 0.3s;
     max-width: 50%;
     margin-left: auto;
     margin-right: auto;
@@ -40,6 +41,7 @@
 }
 
 .link-group div:hover {
+    transition: 0.3s;
     transition: background 0.3s ease, box-shadow 0.3s ease;
     background: rgba(25,27,38,1);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
@@ -48,6 +50,7 @@
 .link-group a {
     color: #eee;
     padding: 0.3rem;
+    transition: 0.3s;
     max-height: 1.6rem;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -59,21 +62,22 @@
     opacity: 1;
     
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        color 0.2s ease;
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
 }
 
 .link-group a:hover {
     color: #ddd;
+    transition: 0.3s;
     padding: 0.3rem;
     max-height: 1.6rem;
     transform: translateY(-0.1rem);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        color 0.2s ease;
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
 }
 
 .Youtube-links a {
@@ -106,4 +110,11 @@
 
 .itchio-links a:hover {
     background: #DA6C6C;
+}
+
+.Github-links a{
+    background: #303030;
+}
+.Github-links a:hover {
+    background: #404040;
 }

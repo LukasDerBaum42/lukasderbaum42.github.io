@@ -44,4 +44,4 @@ Plans I have include: Neuro integration and better combat mechanics.
 
 [If you're interested, the game is out on itch.io, just click here or look in the link section.](https://lukasderbaum42.itch.io/dice-dungeon)
 
-[←Back](../)
+[← Back](./)
