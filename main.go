@@ -60,7 +60,7 @@ func RenderGoals(title, path, prefix string) templ.Component {
 }
 
 func build_german(pages, project_page *map[string]templ.Component){
-	os.Mkdir("build/de/", 0755)
+	os.MkdirAll("build/de/", 0755)
 	prefix := "/de"
 	(*pages)["de/"] = templates.BaseLayout("Meine Seite", "de/", prefix, src_i18n_de.HomePage())
 	(*pages)["de/projects/"] = buildProjects("/de","projects/", project_page)
@@ -72,7 +72,7 @@ func build_german(pages, project_page *map[string]templ.Component){
 
 func build_pages(pages map[string]templ.Component, dev bool) {
 	for name, page := range pages {
-		os.Mkdir("build/"+name, 0755)
+		os.MkdirAll("build/"+name, 0755)
 		f, err := devCreate("build/" + name + "index.html", dev)
 		if err != nil {
 			panic(err)
@@ -95,7 +95,7 @@ func main() {
 	} else {
 		fmt.Println("Dev mode: keeping existing build directory")
 	}
-	os.Mkdir("build", 0755)
+	os.MkdirAll("build", 0755)
 	prefix := ""
 	var project_page = map[string]templ.Component{}
 	var pages = map[string]templ.Component{
